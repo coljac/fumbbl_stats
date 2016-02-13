@@ -1,0 +1,10 @@
+<?php
+
+function block_efficiency ( $player ) { 
+    if($player->playerStatistics->blocks > 0) {
+        return 10*($player->playerStatistics->casualties / $player->playerStatistics->blocks);
+    } 
+    return 0;
+}
+
+?>
