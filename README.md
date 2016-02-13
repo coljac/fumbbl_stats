@@ -27,6 +27,8 @@ Note you don't have to be the administrator of a tournament to set this up, sinc
 
 After activating the plugin a new menu option should appear. Enter the group and tournament ids in the box and save them.
 
+The table will have a CSS class of "fumbbltable" by default. You need to add that to your own styles if you want to tweak it, or change the table class with the config option specified.
+
 ## Caching the data
 
 Rendering a single table might require fetching a dozen pages from Fumbbl.com, so for reasons of speed and politeness it's highly encouraged to cache these results for a period of time. By default, the cache lasts for a day. However, you might want to set a longer value and clear it at the end of the round if you have a round-robin style of league.

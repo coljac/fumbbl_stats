@@ -41,6 +41,11 @@ function fumbbl_stats_settings_page() {
         <td><input type="text" name="cache_time" value="<?php echo esc_attr( get_option('cache_time') ); ?>" /></td>
         </tr>
         
+        <tr valign="top">
+        <th scope="row">CSS class for tables</th>
+        <td><input type="text" name="table_css_class" value="<?php echo esc_attr( get_option('table_css_class') ); ?>" /></td>
+        </tr>
+        
     </table>
     
     <?php submit_button(); ?>
@@ -56,6 +61,7 @@ function fumbbl_stats_settings() {
     register_setting( 'fumbbl-stats-settings-group', 'group_id' );
     register_setting( 'fumbbl-stats-settings-group', 'tournament_id' );
     register_setting( 'fumbbl-stats-settings-group', 'cache_time' );
+    register_setting( 'fumbbl-stats-settings-group', 'table_css_class' );
 }
 
 

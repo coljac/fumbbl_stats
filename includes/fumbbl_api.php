@@ -3,15 +3,19 @@
     global $Cache_Lite;
     include_once('cache_init.php');
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    /* ini_set('display_errors', 1); */
+    /* ini_set('display_startup_errors', 1); */
+    /* error_reporting(E_ALL); */
 
     /* Global variables for all fumbbl data */
-    global $fumbbl_players, $fumbbl_teams, $tournamentObj;
+    global $fumbbl_players, $fumbbl_teams, $tournamentObj, $tableclass;
 
     $fumbbl_players = array();
     $fumbbl_teams = array();
+    $tableclass = "fumbbltable";
+    if( get_option("table_css_class") ) {
+        $tableclass = get_option("table_css_class");
+    }
 
     if(file_exists(dirname(__FILE__).'/fumbbl_extensions.php'))
         include dirname(__FILE__).'/fumbbl_extensions.php';
@@ -38,7 +42,7 @@
      */
     function fumbblPlayerTable( $statname, $headertext="Top players", $columntext="Value", $numEntries=10)
     {
-        global $fumbbl_players;
+        global $fumbbl_players, $tableclass;
         $sortedPlayers= $fumbbl_players;
         if(function_exists ( $statname )) {
             $statistic = $statname;
@@ -48,7 +52,7 @@
         usort( $sortedPlayers,  playerCmp($statistic) );
         $leadList = array_reverse( $sortedPlayers);
         $html = "";
-        $html = $html."<table class='leaderlist'><tr><th colspan=5>";
+        $html = $html."<table class='".$tableclass."'><tr><th colspan=5>";
         $html = $html.$headertext;
         $html = $html."</th></tr>";
         $html = $html."<tr><td class='columnheader'></td><td class='columnheader'>Player</td><td class='columnheader'>Position</td>";
@@ -91,7 +95,7 @@
 
     function fumbblTeamTable( $statname, $headertext="Top teams", $columntext="Value")
     {
-        global $fumbbl_teams;
+        global $fumbbl_teams, $tableclass;
         if(function_exists ( $statname )) {
             $statistic = $statname;
         } else {
@@ -101,7 +105,7 @@
         $teamsCopy = $fumbbl_teams;
         usort( $teamsCopy, playerCmp($statistic) );
         $teamList = array_reverse( $teamsCopy );
-        $html = $html."<table class='teamlist'><tr><th colspan=4>";
+        $html = $html."<table class='".$tableclass."'><tr><th colspan=4>";
         $html = $html.$headertext;
         $html = $html."</th></tr>";
         $html = $html."<tr><td class='columnheader'></td><td class='columnheader'>Team</td><td class='columnheader'>Coach</td>";
@@ -140,7 +144,7 @@
 
     function fumbblStandingsTable( $headertext="League Standings")
     {
-        global $fumbbl_teams;
+        global $fumbbl_teams, $tableclass;
         $html = "";
         $sortedTeams = $fumbbl_teams;
         usort( $sortedTeams, function( $one, $two ) {
@@ -157,7 +161,7 @@
             return  ( $a < $b ) ? -1 : 1;
         } );
         $teamList = array_reverse( $sortedTeams );
-        $html = $html."<table class='teamlist'><tr><th colspan=9>";
+        $html = $html."<table class='".$tableclass."'><tr><th colspan=9>";
         $html = $html.$headertext;
         $html = $html."</th></tr>";
         $html = $html."<tr><td class='columnheader'></td><td class='columnheader'>Team</td><td class='columnheader'>Coach</td>";
@@ -201,10 +205,9 @@
     }
 
     function fumbblMatchTable( $title="Recent matches", $entries=30 ) {
-        global $tournamentObj;
-        global $fumbbl_teams;
+        global $tournamentObj, $fumbbl_teams, $tableclass;
 
-         echo "<table class='teamlist'><tr><th colspan=4>";
+         echo "<table class='".$tableclass."'><tr><th colspan=4>";
          echo $title;
          echo "</th></tr>";
          echo "<tr><td class='columnheader' style='text-align: center;'>Round</td class='columnheader'> ".
