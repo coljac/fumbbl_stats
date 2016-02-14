@@ -19,7 +19,7 @@ function fumbbl_plugin_menu() {
 function fumbbl_stats_settings_page() {
 ?>
 <div class="wrap">
-<h2>Staff Details</h2>
+<h2>Fumbbl Stats Configuration</h2>
 
 <form method="post" action="options.php">
     <?php settings_fields( 'fumbbl-stats-settings-group' ); ?>
@@ -55,6 +55,8 @@ function fumbbl_stats_settings_page() {
 <?php
 }
 
+wp_register_style('fumbbl_css', plugins_url('includes/style.css',__FILE__ ));
+
 add_action( 'admin_init', 'fumbbl_stats_settings' );
 
 function fumbbl_stats_settings() {
@@ -71,6 +73,7 @@ function fumbbl_stats_settings() {
 // title = Header row of table
 function standings_table( $atts ){
     include_once('includes/fumbbl_api.php');
+    wp_enqueue_style('fumbbl_css');
     $a = shortcode_atts( array(
         'title' => 'Current standings'
     ), $atts );
@@ -81,23 +84,28 @@ add_shortcode( 'fumbbl_standings_table', 'standings_table');
 
 function player_table ( $atts ) {
     include_once('includes/fumbbl_api.php');
+    wp_enqueue_style('fumbbl_css');
     $a = shortcode_atts( array(
         'attribute'=>'currentSpps',
         'title' => 'Top players',
         'column_label'=>'',
-        'entries'=> 10
+        'entries'=> 10,
+        'minimum'=>0
     ), $atts );
-    return fumbblPlayerTable($a['attribute'], $a['title'], $a['column_label']?$a['column_label']:NULL, $a['entries'] );
+    return fumbblPlayerTable($a['attribute'], $a['title'], $a['column_label']?$a['column_label']:NULL, 
+        $a['entries'], $a['minimum'] );
 }
 
 add_shortcode( 'fumbbl_player_table', 'player_table');
 
 function team_table ( $atts ) {
     include_once('includes/fumbbl_api.php');
+    wp_enqueue_style('fumbbl_css');
     $a = shortcode_atts( array(
         'attribute'=>'touchdowns',
         'title' => 'Top teams',
-        'column_label'=>''
+        'column_label'=>'',
+        'minimum'=>0
     ), $atts );
     return fumbblTeamTable($a['attribute'], $a['title'], $a['column_label']?$a['column_label']:NULL);
 }
@@ -106,6 +114,7 @@ add_shortcode( 'fumbbl_team_table', 'team_table');
 
 function match_table ( $atts ) {
     include_once('includes/fumbbl_api.php');
+    wp_enqueue_style('fumbbl_css');
     $a = shortcode_atts( array(
         'title' => 'Recent matches',
         'entries'=>20
