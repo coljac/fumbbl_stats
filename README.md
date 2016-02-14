@@ -11,7 +11,7 @@ This plugin will fetch information about the teams and players in your league an
 To install the plugin, either:
 
 - Download the zip file, and unzip it in `[wordpress root]/wp-content/plugins`, or;
-- Clone this repository into the same directory, with `git clone https://..../fumbbl_stats.git fumbbl_stats`
+- Clone this repository into the same directory, with `git clone https://github.com/coljac/fumbbl_stats.git fumbbl_stats`
 
 You should now find the plugin in the Wordpress administration plugins page. Activate it.
 
