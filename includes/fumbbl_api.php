@@ -115,11 +115,11 @@ function fumbblTeamTable( $statname, $headertext="Top teams", $columntext="Value
     $html = $html."</td></tr>\n";
     for ( $i = 0; $i < count( $teamList ); $i++ )
     {
+        $team = $teamList[$i];
         $rr = $statistic($team);
         if($rr<$minval) {
             continue;
         }
-        $team = $teamList[$i];
         $html = $html."<tr>\n";
         $html = $html."<td>\n";
         $html = $html.strval( $i+1 );
@@ -133,7 +133,7 @@ function fumbblTeamTable( $statname, $headertext="Top teams", $columntext="Value
         $html = $html."<td>\n";
         if ( is_int( $rr) )
         {
-            $html = $html.strval( $rr  );
+            $html = $html.strval($rr);
         }
         else
         {
