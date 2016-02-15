@@ -1,13 +1,7 @@
 <?php
 
-global $Cache_Lite;
-include_once('cache_init.php');
+include_once('quick_cache.php');
 
-/* ini_set('display_errors', 1); */
-/* ini_set('display_startup_errors', 1); */
-/* error_reporting(E_ALL); */
-
-/* Global variables for all fumbbl data */
 global $fumbbl_players, $fumbbl_teams, $tournamentObj, $tableclass;
 
 $fumbbl_players = array();
@@ -25,14 +19,16 @@ if(file_exists(dirname(__FILE__).'/fumbbl_extensions.php'))
  * first it looks in the cache for a local version.
  */
 function getUrlContents($url) {
-    global $Cache_Lite;
-    $result = $Cache_Lite->get($url);
+    $result = NULL;
+    if ( !isset($_GET['nocache'])) {
+        $result = read_from_cache($url,  get_option("cache_time"));
+    }
     if(! $result) {
         $ch = curl_init( $url );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
         curl_setopt( $ch, CURLOPT_POST, 1 );
         $result = @curl_exec( $ch );
-        $Cache_Lite->save($result, $url);
+        write_to_cache($result, $url);
     }
     return $result;
 }
