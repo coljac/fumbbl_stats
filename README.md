@@ -6,8 +6,6 @@ This plugin will fetch information about the teams and players in your league an
 
 ## Installation
 
-**Note:** Currently the plugin relies on the [Cache Lite](https://pear.php.net/package/Cache_Lite/) PHP package to cache data and won't work well without it. I'll remove this dependence hopefully in the next update.
-
 To install the plugin, either:
 
 - Download the zip file, and unzip it in `[wordpress root]/wp-content/plugins`, or;
